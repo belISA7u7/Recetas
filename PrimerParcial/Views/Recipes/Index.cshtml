@@ -1,16 +1,17 @@
-﻿@model IEnumerable<PrimerParcial.Models.Ingredient>
+﻿@model IEnumerable<PrimerParcial.Models.Recipe>
 @{
-    ViewData["Title"] = "Ingredientes";
+    ViewData["Title"] = "Recetas";
 }
-<h1>Ingredientes</h1>
+<h1>Recetas</h1>
 
-<a asp-action="Create" class="btn btn-primary mb-2">Nuevo Ingrediente</a>
+<a asp-action="Create" class="btn btn-primary mb-2">Nueva Receta</a>
 <table class="table">
     <thead>
         <tr>
-            <th>Nombre</th>
-            <th>Cantidad</th>
-            <th>Receta</th>
+            <th>Título</th>
+            <th>Categoría</th>
+            <th>Tiempo de preparación</th>
+            <th>Porciones</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -18,9 +19,10 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Name</td>
-                <td>@item.Quantity</td>
-                <td>@item.Recipe?.Title</td>
+                <td>@item.Title</td>
+                <td>@item.Category?.Name</td>
+                <td>@item.PreparationTimeMinutes min</td>
+                <td>@item.Servings</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Ver</a> |
