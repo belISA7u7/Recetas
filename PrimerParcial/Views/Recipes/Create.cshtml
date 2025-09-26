@@ -1,62 +1,49 @@
 ﻿@model PrimerParcial.Models.Recipe
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Receta";
 }
 
-<h1>Create</h1>
-
-<h4>Recipe</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PreparationTimeMinutes" class="control-label"></label>
-                <input asp-for="PreparationTimeMinutes" class="form-control" />
-                <span asp-validation-for="PreparationTimeMinutes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Servings" class="control-label"></label>
-                <input asp-for="Servings" class="form-control" />
-                <span asp-validation-for="Servings" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Instructions" class="control-label"></label>
-                <input asp-for="Instructions" class="form-control" />
-                <span asp-validation-for="Instructions" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateCreated" class="control-label"></label>
-                <input asp-for="DateCreated" class="form-control" />
-                <span asp-validation-for="DateCreated" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<h1>Crear Receta</h1>
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Title" class="control-label">Título</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+    <div class="form-group">
+        <label asp-for="Description" class="control-label">Descripción</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PreparationTimeMinutes" class="control-label">Tiempo de preparación (minutos)</label>
+        <input asp-for="PreparationTimeMinutes" class="form-control" />
+        <span asp-validation-for="PreparationTimeMinutes" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Servings" class="control-label">Porciones</label>
+        <input asp-for="Servings" class="form-control" />
+        <span asp-validation-for="Servings" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Instructions" class="control-label">Instrucciones</label>
+        <textarea asp-for="Instructions" class="form-control"></textarea>
+        <span asp-validation-for="Instructions" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId" class="control-label">Categoría</label>
+        <select asp-for="CategoryId" class="form-control" asp-items="@(ViewBag.CategoryId ?? ViewData["CategoryId"])">
+            <option value="">Seleccione una categoría</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

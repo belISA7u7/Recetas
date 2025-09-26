@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -29,18 +27,13 @@ namespace PrimerParcial.Controllers
         // GET: Recipes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var recipe = await _context.Recipes
                 .Include(r => r.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (recipe == null)
-            {
-                return NotFound();
-            }
+
+            if (recipe == null) return NotFound();
 
             return View(recipe);
         }
@@ -48,13 +41,11 @@ namespace PrimerParcial.Controllers
         // GET: Recipes/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description");
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
             return View();
         }
 
         // POST: Recipes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,PreparationTimeMinutes,Servings,Instructions,DateCreated,CategoryId")] Recipe recipe)
@@ -65,38 +56,29 @@ namespace PrimerParcial.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", recipe.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", recipe.CategoryId);
             return View(recipe);
         }
 
         // GET: Recipes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var recipe = await _context.Recipes.FindAsync(id);
-            if (recipe == null)
-            {
-                return NotFound();
-            }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", recipe.CategoryId);
+
+            if (recipe == null) return NotFound();
+
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", recipe.CategoryId);
             return View(recipe);
         }
 
         // POST: Recipes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,PreparationTimeMinutes,Servings,Instructions,DateCreated,CategoryId")] Recipe recipe)
         {
-            if (id != recipe.Id)
-            {
-                return NotFound();
-            }
+            if (id != recipe.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -107,36 +89,25 @@ namespace PrimerParcial.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RecipeExists(recipe.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!RecipeExists(recipe.Id)) return NotFound();
+                    else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", recipe.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", recipe.CategoryId);
             return View(recipe);
         }
 
         // GET: Recipes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var recipe = await _context.Recipes
                 .Include(r => r.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (recipe == null)
-            {
-                return NotFound();
-            }
+
+            if (recipe == null) return NotFound();
 
             return View(recipe);
         }
@@ -150,9 +121,8 @@ namespace PrimerParcial.Controllers
             if (recipe != null)
             {
                 _context.Recipes.Remove(recipe);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

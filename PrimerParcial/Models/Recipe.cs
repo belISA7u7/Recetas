@@ -11,7 +11,7 @@ namespace PrimerParcial.Models
         [Required]
         [StringLength(100)]
         public string Title { get; set; }
-       
+
         [Required]
         public string Description { get; set; }
 
@@ -26,9 +26,10 @@ namespace PrimerParcial.Models
 
         public DateTime DateCreated { get; set; } = DateTime.Now;
 
-        // Relaciones
+        // Relación con Categoría
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+
         public ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
     }
 }
